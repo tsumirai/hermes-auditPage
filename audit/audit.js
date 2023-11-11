@@ -163,7 +163,7 @@ function approveClub(clubIndex) {
             // 渲染获取的数据
             console.log(data)
             fetchClubData(currentClubPage);
-            alert("帖子已通过审核");
+            alert("社团已通过审核");
         })
         .catch(error => {
             console.error("Error fetching data:", error);
@@ -400,7 +400,7 @@ function rejectAudit() {
                 .then(data => {
                     // 渲染获取的数据
                     console.log(data)
-                    alert("帖子已驳回");
+                    alert("社团已驳回");
                     fetchActivityData(currentActivityPage);
                 })
                 .catch(error => {
