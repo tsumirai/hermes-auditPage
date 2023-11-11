@@ -1,0 +1,116 @@
+/* 整体布局 */
+.container {
+    display: flex;
+    flex-direction: row;
+}
+
+/* 标签页容器 */
+.tabs {
+    width: 200px; /* 左侧标签页容器的宽度 */
+    background-color: #f2f2f2;
+    padding: 10px;
+    text-align: center; /* 文本居中 */
+}
+
+/* 标签链接样式 */
+.tabs button {
+    display: block;
+    background-color: transparent;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    margin-bottom: 10px;
+    padding: 10px;
+    transition: 0.3s;
+    width: 100%;
+    text-align: left;
+    font-weight: bold; /* 添加加粗样式 */
+    font-size: 1.2em; /* 设置字号为原来的2倍 */
+}
+
+/* 改变标签链接的颜色 */
+.tabs button:hover {
+    background-color: #ddd;
+}
+
+/* 内容容器 */
+.content {
+    flex-grow: 1; /* 自动填充剩余空间 */
+    padding: 10px;
+    display: flex;
+    flex-direction: column; /* 垂直排列内容 */
+    justify-content: center; /* 水平居中内容 */
+    align-items: center; /* 垂直居中内容 */
+}
+
+/* 居中对齐搜索容器 */
+.search-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    margin-bottom: 20px; /* 添加下方的间距 */
+}
+
+/* 添加选中时的动画效果 */
+.tabs button.selected {
+    background-color: #ddd; /* 选中时的背景颜色 */
+    animation: selectedAnimation 0.3s ease-in-out; /* 添加动画效果 */
+}
+
+/* 定义动画效果 */
+@keyframes selectedAnimation {
+    0% {
+        transform: scale(1); /* 初始大小 */
+    }
+    50% {
+        transform: scale(1.1); /* 中间放大 */
+    }
+    100% {
+        transform: scale(1); /* 最终大小 */
+    }
+}
+
+/* 表格样式 */
+table {
+    width: 100%; /* 表格宽度设置为100%以充分利用可用空间 */
+    border-collapse: collapse; /* 合并单元格边框 */
+    margin-top: 20px; /* 添加上方的间距 */
+}
+
+/* 表格的表头样式 */
+table thead th {
+    background-color: #f2f2f2; /* 表头背景颜色 */
+    border: 1px solid #ddd; /* 表头边框样式 */
+    padding: 10px; /* 表头单元格内边距 */
+    text-align: left; /* 文本左对齐 */
+}
+
+/* 表格的表体样式 */
+table tbody td {
+    border: 1px solid #ddd; /* 表格边框样式 */
+    padding: 10px; /* 单元格内边距 */
+    text-align: left; /* 文本左对齐 */
+}
+
+/* 新增样式，用于模态框 */
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    z-index: 1;
+}
+
+.modal-content {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 5px;
+}

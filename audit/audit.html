@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<meta charset="UTF-8">
+<html>
+<head>
+    <title>管理后台</title>
+        <link rel="stylesheet" type="text/css" href="audit.css">
+        <script src="audit.js"></script>
+</head>
+<body>
+    <h1 style="text-align: center;">管理后台</h1>
+
+    <div class="container">
+        <!-- 左侧标签页容器 -->
+        <div class="tabs">
+            <button class="tablinks" onclick="openTab(event, 'postTab')">活动</button>
+            <button class="tablinks" onclick="openTab(event, 'communityTab')">社团</button>
+        </div>
+
+
+        <!-- 右侧内容容器 -->
+        <div class="content">
+            <!-- 帖子标签页内容 -->
+            <div id="postTab" class="tabcontent">
+                <div class="content">
+                    <h2>帖子管理</h2>
+                    <!-- 下拉菜单和表格等内容 -->
+                    <div class="search-container">
+                        <!-- 下拉菜单 -->
+                        <label for="postType">帖子类型：</label>
+                        <select id="postType">
+                            <option value="">全部帖子</option>
+                            <option value="0,1">待审核帖子</option>
+                            <option value="2,3,-1,-2,-3,-4">已审核帖子</option>
+                        </select>
+                    
+                        <!-- 活动ID输入框和查询按钮 -->
+                        <label for="activityId">活动ID：</label>
+                        <input type="text" id="activityId">
+
+                        <!-- 查询按钮 -->
+                        <button onclick="fetchActivityData(1)">查询</button>
+                    </div>
+
+                    <table border="1">
+                        <thead>
+                            <tr>
+                                <th>活动id</th>
+                                <th>标题</th>
+                                <th>内容</th>
+                                <th>封面图片</th>
+                                <th>图片</th>
+                                <th>发布者昵称</th>
+                                <th>活动地点</th>
+                                <th>上线状态</th>
+                                <th>审核状态</th>
+                                <th>审核原因</th>
+                                <th>操作</th>
+                            </tr>
+                        </thead>
+                        <tbody id="postTableBody">
+                            <!-- 帖子数据将动态填充到这里 -->
+                        </tbody>
+                    </table>
+
+                    <!-- 分页按钮和信息 -->
+                    <div class="pagination">
+                        <button onclick="prevActivityPage()">上一页</button>
+                        <span id="pageActivityInfo">Page 1 of 1</span>
+                        <button onclick="nextActivityPage()">下一页</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 社团标签页内容 -->
+            <div id="communityTab" class="tabcontent">
+                <div class="content">
+                    <h2>社团管理</h2>
+                    <!-- 下拉菜单和表格等内容 -->
+                    <!-- 下拉菜单和查询按钮容器 -->
+                    <div class="search-container">
+                        <!-- 下拉菜单 -->
+                        <label for="communityType">社团类型：</label>
+                        <select id="communityType">
+                            <option value="">全部社团</option>
+                            <option value="0,1">待审核社团</option>
+                            <option value="2,3,-1,-2,-3,-4">已审核社团</option>
+                        </select>
+
+                         <!-- 活动ID输入框和查询按钮 -->
+                         <label for="clubId">社团ID：</label>
+                         <input type="text" id="clubId">
+
+                        <!-- 查询按钮 -->
+                        <button onclick="fetchClubData(1)">查询</button>
+                    </div>
+
+                    <table border="1">
+                        <thead>
+                            <tr>
+                                <th>社团id</th>
+                                <th>社团名称</th>
+                                <th>社团icon</th>
+                                <th>社团背景图</th>
+                                <th>社团描述</th>
+                                <th>创建者uid</th>
+                                <th>社团地点</th>
+                                <th>上线状态</th>
+                                <th>审核原因</th>
+                                <th>操作</th>
+                            </tr>
+                        </thead>
+                        <tbody id="communityTableBody">
+                            <!-- 社团数据将动态填充到这里 -->
+                        </tbody>
+                    </table>
+
+                    <!-- 分页按钮和信息 -->
+                    <div class="pagination">
+                        <button onclick="prevClubPage()">上一页</button>
+                        <span id="pageClubInfo">Page 1 of 1</span>
+                        <button onclick="nextClubPage()">下一页</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+     <!-- 模态框（驳回原因选择） -->
+     <div id="rejectModal" class="modal">
+        <div class="modal-content">
+            <span class="close" id="closeModal">&times;</span>
+            <h2>选择驳回原因</h2>
+            <form id="rejectionReasonForm">
+                <label><input type="radio" name="rejectionReason" value="色情"> 色情</label><br>
+                <label><input type="radio" name="rejectionReason" value="暴力"> 暴力</label><br>
+                <label><input type="radio" name="rejectionReason" value="涉政"> 涉政</label><br>
+                <button type="button" onclick="rejectAudit()" id="submitRejection">提交</button>
+                <button type="button" onclick="closeRejectionModal()" id="cancelRejection">取消</button>
+            </form>
+        </div>
+    </div>
+
+</body>
+</html>
