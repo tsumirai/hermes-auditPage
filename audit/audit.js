@@ -236,6 +236,7 @@ function renderCommunityData(clubData) {
             <td>${club.creator_uid}</td>
             <td>${club.location_desc}</td>
             <td>${club.club_status}</td>
+            <td>${post.audit_status}</td>
             <td>${club.audit_reason}</td>
             <td>
                 <button onclick="approveClub(${index})">通过审核</button>
