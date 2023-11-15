@@ -3,8 +3,8 @@
 <html>
 <head>
     <title>管理后台</title>
-        <link rel="stylesheet" type="text/css" href="audit.css">
-        <script src="audit.js"></script>
+    <link rel="stylesheet" type="text/css" href="audit.css">
+    <script src="audit.js"></script>
 </head>
 <body>
     <h1 style="text-align: center;">管理后台</h1>
@@ -14,6 +14,7 @@
         <div class="tabs">
             <button class="tablinks" onclick="openTab(event, 'postTab')">活动</button>
             <button class="tablinks" onclick="openTab(event, 'communityTab')">社团</button>
+            <button class="tablinks" onclick="openTab(event, 'activityResultTab')">活动成果</button>
         </div>
 
 
@@ -120,6 +121,56 @@
                         <button onclick="prevClubPage()">上一页</button>
                         <span id="pageClubInfo">Page 1 of 1</span>
                         <button onclick="nextClubPage()">下一页</button>
+                    </div>
+                </div>
+            </div>
+
+             <!-- 活动成果标签页内容 -->
+             <div id="activityResultTab" class="tabcontent">
+                <div class="content">
+                    <h2>活动成果管理</h2>
+                    <!-- 下拉菜单和表格等内容 -->
+                    <div class="search-container">
+                        <!-- 下拉菜单 -->
+                        <label for="resultType">帖子类型：</label>
+                        <select id="resultType">
+                            <option value="">全部活动成果</option>
+                            <option value="0,1">待审核活动成果</option>
+                            <option value="2,3,-1,-2,-3,-4">已审核活动成果</option>
+                        </select>
+                    
+                        <!-- 活动成果ID输入框和查询按钮 -->
+                        <label for="resultId">活动成果ID：</label>
+                        <input type="text" id="resultId">
+
+                        <!-- 查询按钮 -->
+                        <button onclick="fetchActivityResultData(1)">查询</button>
+                    </div>
+
+                    <table border="1">
+                        <thead>
+                            <tr>
+                                <th>活动结果id</th>
+                                <th>活动id</th>
+                                <th>活动结果</th>
+                                <th>图片</th>
+                                <th>发布者Uid</th>
+                                <th>上线状态</th>
+                                <th>审核状态</th>
+                                <th>审核原因</th>
+                                <th>操作</th>
+                            </tr>
+                        </thead>
+                        <tbody id="resultTableBody">
+                            <!-- 帖子数据将动态填充到这里 -->
+                        </tbody>
+                    </table>
+
+                    <!-- 分页按钮和信息 -->
+                    <div class="pagination">
+                        <button onclick="prevActivityPage()">上一页</button>
+                        <span id="pageActivityResultInfo">Page 1 of 1</span>
+                        <button onclick="nextActivityPage()">下一页</button>
                     </div>
                 </div>
             </div>

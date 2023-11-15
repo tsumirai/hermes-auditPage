@@ -4,18 +4,21 @@ const pageSize = 10;
 // 当前页码
 let currentActivityPage = 1;
 let currentClubPage = 1;
+let currentResultPage = 1;
 
 // 总数据量（假设在服务端获取）
 let totalActivityCount = 0; // 这里需要根据实际情况设置
 let totalClubCount = 0; 
+let totalResultCount = 0;
 
 let activityIdMap = {};
-
 let rejectActivityIndex = 0;
 
 let clubIdMap = {};
-
 let rejectClubIndex = 0;
+
+let resultIdMap = {};
+let rejectResultIndex = 0;
 
 let rejectType = 0;
 
@@ -252,6 +255,167 @@ function renderCommunityData(clubData) {
 }
 
 
+// 模拟从服务端获取活动成果数据的函数，根据成果类型筛选
+function fetchActivityResultData(pageNo) {
+    currentResultPage = pageNo
+    const postType = document.getElementById("resultType").value;
+    const resultIdInput = document.getElementById("resultId");
+    const resultId = resultIdInput.value.trim();
+
+    // 检查输入是否为数字
+    if (!isNaN(resultId)) {
+        // 在这里向服务端发送带有活动ID的请求
+        // 例如：fetch(`/api/getActivityById?id=${activityId}`)
+        // 处理服务端返回的数据并显示在页面上
+    } else {
+        alert("请输入有效的活动成果ID");
+    }
+    
+    // 发送GET请求到服务端以获取查询数据
+    fetch(`http://124.220.84.200:5455/platform/queryActivityResult?page_no=${pageNo}&page_size=${pageSize}&audit_type=${postType}&activity_id=${resultId}`)
+        .then(response => response.json())
+        .then(data => {
+            // 渲染获取的数据
+            console.log(data)
+            renderActivityResultData(data);
+        })
+        .catch(error => {
+            console.error("Error fetching data:", error);
+        });
+}
+
+
+// 渲染活动成果数据到表格
+function renderActivityResultData(resultData) {
+    const resultTableBody = document.getElementById("resultTableBody");
+  
+    // 清空表格内容
+    resultTableBody.innerHTML = "";
+
+    resultData.data.activity_result_datas.forEach((post, index) => {
+        const row = document.createElement("tr");
+
+        resultIdMap[index] = post.result_id
+   
+        row.innerHTML = `
+            <td>${post.result_id}
+            <td>${post.activity_id}</td>
+            <td>${post.context}</td>
+            <td>${generateImageTags(post.image_urls)}</td>
+            <td>${post.author_uid}</td>
+            <td>${post.status}</td>
+            <td>${post.audit_status}</td>
+            <td>${post.audit_reason}</td>
+            <td>
+                <button onclick="approveActivityResult(${index})">通过审核</button>
+                <button onclick="rejectActivityResult(${index})">驳回</button>
+            </td>
+        `;
+        resultTableBody.appendChild(row);
+    });
+
+    totalResultCount = resultData.data.activity_result_num
+    updateActivityResultPageInfo();
+}
+
+
+// 处理通过审核操作
+function approveActivityResult(resultIndex) {
+    // 在这里执行通过审核操作，可以向服务端发送请求
+    let resultId = resultIdMap[resultIndex]
+
+    // 发送POST请求到服务端以获取查询数据
+    fetch(`http://124.220.84.200:5455/platform/auditData`,{
+        method: 'post',
+        headers: {
+            'Content-Type':'application/json',
+            'Access-Control-Allow-Origin': '*'
+        },
+        body: JSON.stringify({
+            "data_ids":[String(resultId)],
+            "data_type":2,
+            "audit_status":1,
+        })
+    })
+        .then(response => response.json())
+        .then(data => {
+            // 渲染获取的数据
+            console.log(data)
+            fetchActivityResultData(currentResultPage);
+            alert("帖子已通过审核");
+        })
+        .catch(error => {
+            console.error("Error fetching data:", error);
+            alert("审核出错");
+        });
+}
+
+
+// 当用户点击驳回按钮时，弹出驳回原因选择模态框
+function rejectActivityResult(index) {
+    rejectResultIndex = index;
+    rejectType = 0;
+    openRejectionModal();
+}
+
+
+
+// 辅助函数，生成多张图片的HTML标签
+function generateImageTags(imageUrls) {
+    if (Array.isArray(imageUrls) && imageUrls.length > 0) {
+        const imageTags = imageUrls.map(imageUrl => {
+            if (imageUrl !== "") {
+                return `<img src="${imageUrl}" alt="活动图片" width="100">`;
+            } else {
+                return ''; // 不展示空字符串
+            }
+        });
+        return imageTags.join('');
+    }
+    return '';
+}
+
+// 处理通过审核操作
+function approvePost(activityIndex) {
+    // 在这里执行通过审核操作，可以向服务端发送请求
+    let activityId = activityIdMap[activityIndex]
+
+    // 发送POST请求到服务端以获取查询数据
+    fetch(`http://124.220.84.200:5455/platform/auditData`,{
+        method: 'post',
+        headers: {
+            'Content-Type':'application/json',
+            'Access-Control-Allow-Origin': '*'
+        },
+        body: JSON.stringify({
+            "data_ids":[String(activityId)],
+            "data_type":0,
+            "audit_status":1,
+        })
+    })
+        .then(response => response.json())
+        .then(data => {
+            // 渲染获取的数据
+            console.log(data)
+            fetchActivityData(currentActivityPage);
+            alert("帖子已通过审核");
+        })
+        .catch(error => {
+            console.error("Error fetching data:", error);
+            alert("审核出错");
+        });
+}
+
+
+// 当用户点击驳回按钮时，弹出驳回原因选择模态框
+function rejectPost(index) {
+    rejectActivityIndex = index;
+    rejectType = 0;
+    openRejectionModal();
+}
+
+
+
 // 分页按钮和信息元素
 const prevButton = document.querySelector("#postTab .pagination button:first-child");
 const nextButton = document.querySelector("#postTab .pagination button:last-child");
@@ -295,6 +459,26 @@ function nextClubPage() {
     }
 }
 
+// 上一页按钮点击事件处理函数
+function prevActivityResultPage() {
+    if (currentResultPage > 1) {
+        currentResultPage--;
+        //fetchAndRenderPostData();
+        fetchActivityResultData(currentResultPage);
+    }
+}
+
+// 下一页按钮点击事件处理函数
+function nextActivityResultPage() {
+    const totalPages = Math.ceil(totalResultCount / pageSize);
+    if (currentResultPage < totalPages) {
+        currentResultPage++;
+        //fetchAndRenderPostData();
+        fetchActivityResultData(currentResultPage);
+    }
+}
+
+
 // 更新分页信息
 function updateActivityPageInfo() {
     const totalPages = Math.ceil(totalActivityCount / pageSize);
@@ -305,6 +489,12 @@ function updateActivityPageInfo() {
 function updateClubPageInfo() {
     const totalPages = Math.ceil(totalClubCount / pageSize);
     document.getElementById("pageClubInfo").innerText=`Page ${currentClubPage} of ${totalPages}`
+}
+
+// 更新分页信息
+function updateActivityResultPageInfo() {
+    const totalPages = Math.ceil(totalResultCount / pageSize);
+    document.getElementById("pageActivityResultInfo").innerText=`Page ${currentResultPage} of ${totalPages}`
 }
 
 // 在下拉菜单选择发生变化时重新获取和渲染帖子数据
@@ -342,6 +532,8 @@ function openTab(evt, tabName) {
         rejectType = 0
     } else if (tabName == 'communityTab') {
         rejectType = 1
+    } if (tabName == 'activityResultTab') {
+        rejectType = 2
     }
     
     if (selectedTab) {
@@ -438,7 +630,36 @@ function rejectAudit() {
                 });
             console.log("提交驳回原因:", reasonValue);
             closeRejectionModal();
-        } else {
+        } else if (rejectType == 2) {
+            let resultId = resultIdMap[rejectResultIndex]
+            // 发送POST请求到服务端以获取查询数据
+            fetch(`http://124.220.84.200:5455/platform/auditData`,{
+                method: 'post',
+                headers: {
+                    'Content-Type':'application/json',
+                    'Access-Control-Allow-Origin': '*'
+                },
+                body: JSON.stringify({
+                    "data_ids":[String(resultId)],
+                    "data_type":2,
+                    "audit_status":-1,
+                    "audit_reason":reasonValue
+                })
+            })
+                .then(response => response.json())
+                .then(data => {
+                    // 渲染获取的数据
+                    console.log(data)
+                    alert("活动成果已驳回");
+                    fetchActivityResultData(currentResultPage);
+                })
+                .catch(error => {
+                    console.error("Error fetching data:", error);
+                    alert("驳回出错");
+                });
+            console.log("提交驳回原因:", reasonValue);
+            closeRejectionModal();
+        }else {
             alert("审核类型错误");
         }
 
