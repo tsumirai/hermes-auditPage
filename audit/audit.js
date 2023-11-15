@@ -292,7 +292,7 @@ function renderActivityResultData(resultData) {
     // 清空表格内容
     resultTableBody.innerHTML = "";
 
-    resultData.data.activity_result_datas.forEach((post, index) => {
+    resultData.data.result_datas.forEach((post, index) => {
         const row = document.createElement("tr");
 
         resultIdMap[index] = post.result_id
