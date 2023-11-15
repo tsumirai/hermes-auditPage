@@ -342,7 +342,7 @@ function approveActivityResult(resultIndex) {
             // 渲染获取的数据
             console.log(data)
             fetchActivityResultData(currentResultPage);
-            alert("帖子已通过审核");
+            alert("活动成果已通过审核");
         })
         .catch(error => {
             console.error("Error fetching data:", error);
