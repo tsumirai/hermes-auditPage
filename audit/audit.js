@@ -354,7 +354,7 @@ function approveActivityResult(resultIndex) {
 // 当用户点击驳回按钮时，弹出驳回原因选择模态框
 function rejectActivityResult(index) {
     rejectResultIndex = index;
-    rejectType = 0;
+    rejectType = 2;
     openRejectionModal();
 }
 
