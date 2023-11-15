@@ -301,7 +301,7 @@ function renderActivityResultData(resultData) {
             <td>${post.result_id}
             <td>${post.activity_id}</td>
             <td>${post.context}</td>
-            <td>${generateImageTags(post.image_urls)}</td>
+            <td>${generateImageTags(post.img_urls)}</td>
             <td>${post.author_uid}</td>
             <td>${post.status}</td>
             <td>${post.audit_status}</td>
