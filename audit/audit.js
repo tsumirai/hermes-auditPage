@@ -833,9 +833,9 @@ function renderPublicNoticeData(noticeData) {
             <td>${notice.notice_id}
             <td>${notice.notice_text}</td>
             <td>${notice.notice_jump_url}</td>
+            <td>${convertTimeStampToTime(notice.start_time)}</td>
+            <td>${convertTimeStampToTime(notice.end_time)}</td>
             <td>${notice.status}</td>
-            <td>${notice.start_time}</td>
-            <td>${notice.end_time}</td>
             <td>${notice.creator_uid}</td>
             <td>${notice.creator_name}</td>
         `;
@@ -871,7 +871,26 @@ function nextPubliceNoticePage() {
     }
 }
 
+// 将时间戳（秒）转为年月日
+function convertTimeStampToTime(timeStamp) {
+    if (timeStamp == 0) {
+        return '';
+    }
+
+    let date = new Date(parseInt(timeStamp) *1000);
+    let year = date.getFullYear();
+    let month = (date.getMonth() + 1 <10? '0'+(date.getMonth() + 1) :date.getMonth());
+    let day = (date.getDate() < 10 ? '0'+date.getDate(): date.getDate());
+    let hour = (date.getHours() < 10 ? '0'+date.getHours() : date.getHours());
+    let minute = (date.getMinutes() < 10 ? '0' + date.getMinutes(): date.getMinutes());
+    let second = (date.getSeconds() < 10? '0'+ date.getSeconds(): date.getSeconds());
+
+    let GMT = year+'-'+month+'-'+ day+' '+hour+':'+minute+':'+second;
+    return GMT
+}
+
 // // 当用户点击提交按钮时，向服务端发送请求，并关闭模态框
 // document.getElementById("submitRejection").addEventListener("click", function() {
     
 // });
+
