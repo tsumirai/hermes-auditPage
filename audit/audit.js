@@ -832,7 +832,7 @@ function renderPublicNoticeData(noticeData) {
         row.innerHTML = `
             <td>${notice.notice_id}
             <td>${notice.notice_text}</td>
-            <td>${notice.jump_url}</td>
+            <td>${notice.notice_jump_url}</td>
             <td>${notice.status}</td>
             <td>${notice.start_time}</td>
             <td>${notice.end_time}</td>
@@ -844,6 +844,31 @@ function renderPublicNoticeData(noticeData) {
 
     totalNoticeCount = noticeData.data.notice_num
     updatePublicNoticePageInfo();
+}
+
+// 更新分页信息
+function updatePublicNoticePageInfo() {
+    const totalPages = Math.ceil(totalNoticeCount / pageSize);
+    document.getElementById("pagePublicNoticeInfo").innerText=`Page ${currentNoticePage} of ${totalPages}`
+}
+
+// 上一页按钮点击事件处理函数
+function prevPuliceNoticePage() {
+    if (currentNoticePage > 1) {
+        currentNoticePage--;
+        //fetchAndRenderPostData();
+        fetchPublicNoticeData(currentResultPage);
+    }
+}
+
+// 下一页按钮点击事件处理函数
+function nextPubliceNoticePage() {
+    const totalPages = Math.ceil(totalNoticeCount / pageSize);
+    if (currentNoticePage < totalPages) {
+        currentNoticePage++;
+        //fetchAndRenderPostData();
+        fetchPublicNoticeData(currentNoticePage);
+    }
 }
 
 // // 当用户点击提交按钮时，向服务端发送请求，并关闭模态框
