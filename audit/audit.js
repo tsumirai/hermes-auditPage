@@ -799,7 +799,7 @@ function fetchPublicNoticeData(pageNo) {
     }
     
     // 发送GET请求到服务端以获取查询数据
-    fetch(`http://124.220.84.200:5455/public_notice/getPublicNotice?page_no=${pageNo}&page_size=${pageSize}&notice_type=${noticeType}&notice_id=${noticeId}`)
+    fetch(`http://124.220.84.200:5455/platform/queryPublicNotice?page_no=${pageNo}&page_size=${pageSize}&notice_type=${noticeType}&notice_id=${noticeId}`)
         .then(response => response.json())
         .then(data => {
             // 渲染获取的数据
