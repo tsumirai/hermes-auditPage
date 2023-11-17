@@ -5,11 +5,13 @@ const pageSize = 10;
 let currentActivityPage = 1;
 let currentClubPage = 1;
 let currentResultPage = 1;
+let currentNoticePage = 1;
 
 // 总数据量（假设在服务端获取）
 let totalActivityCount = 0; // 这里需要根据实际情况设置
 let totalClubCount = 0; 
 let totalResultCount = 0;
+let totalNoticeCount = 0;
 
 let activityIdMap = {};
 let rejectActivityIndex = 0;
@@ -19,6 +21,9 @@ let rejectClubIndex = 0;
 
 let resultIdMap = {};
 let rejectResultIndex = 0;
+
+let noticeIdMap = {};
+let rejectNoticeIndex = 0;
 
 let rejectType = 0;
 
@@ -44,7 +49,12 @@ function fetchActivityData(pageNo) {
         .then(data => {
             // 渲染获取的数据
             console.log(data)
-            renderPostData(data);
+            if (data.err_no == 0) {
+                renderPostData(data);
+            }else {
+                alert("获取数据失败："+data.err_no+" "+data.err_msg);
+            }
+           
         })
         .catch(error => {
             console.error("Error fetching data:", error);
@@ -125,8 +135,14 @@ function approvePost(activityIndex) {
         .then(data => {
             // 渲染获取的数据
             console.log(data)
-            fetchActivityData(currentActivityPage);
-            alert("帖子已通过审核");
+            if (data.err_no == 0) {
+                fetchActivityData(currentActivityPage);
+                alert("帖子已通过审核");
+            }else {
+                alert("帖子审核失败失败："+data.err_no+" "+data.err_msg);
+            }
+           
+            
         })
         .catch(error => {
             console.error("Error fetching data:", error);
@@ -165,8 +181,13 @@ function approveClub(clubIndex) {
         .then(data => {
             // 渲染获取的数据
             console.log(data)
-            fetchClubData(currentClubPage);
-            alert("社团已通过审核");
+            if (data.err_no == 0) {
+                fetchClubData(currentClubPage);
+                alert("社团已通过审核");
+            }else {
+                alert("社团审核失败："+data.err_no+" "+data.err_msg);
+            }
+            
         })
         .catch(error => {
             console.error("Error fetching data:", error);
@@ -210,7 +231,12 @@ function fetchClubData(pageNo) {
         .then(data => {
             // 渲染获取的数据
             console.log(data)
-            renderCommunityData(data);
+            if (data.err_no == 0) {
+                renderCommunityData(data);
+            }else {
+                alert("获取社团数据失败："+data.err_no+" "+data.err_msg);
+            }
+            
         })
         .catch(error => {
             console.error("Error fetching data:", error);
@@ -277,7 +303,12 @@ function fetchActivityResultData(pageNo) {
         .then(data => {
             // 渲染获取的数据
             console.log(data)
-            renderActivityResultData(data);
+            if (data.err_no == 0) {
+                renderActivityResultData(data);
+            }else {
+                alert("获取活动数据失败："+data.err_no+" "+data.err_msg);
+            }
+            
         })
         .catch(error => {
             console.error("Error fetching data:", error);
@@ -341,8 +372,13 @@ function approveActivityResult(resultIndex) {
         .then(data => {
             // 渲染获取的数据
             console.log(data)
-            fetchActivityResultData(currentResultPage);
-            alert("活动成果已通过审核");
+            if (data.err_no == 0) {
+                fetchActivityResultData(currentResultPage);
+                alert("活动成果已通过审核");
+            }else {
+                alert("活动审核失败："+data.err_no+" "+data.err_msg);
+            }
+           
         })
         .catch(error => {
             console.error("Error fetching data:", error);
@@ -397,8 +433,13 @@ function approvePost(activityIndex) {
         .then(data => {
             // 渲染获取的数据
             console.log(data)
-            fetchActivityData(currentActivityPage);
-            alert("帖子已通过审核");
+            if (data.err_no == 0) {
+                fetchActivityData(currentActivityPage);
+                alert("帖子已通过审核");
+            }else {
+                alert("帖子审核失败："+data.err_no+" "+data.err_msg);
+            }
+       
         })
         .catch(error => {
             console.error("Error fetching data:", error);
@@ -592,8 +633,14 @@ function rejectAudit() {
                 .then(data => {
                     // 渲染获取的数据
                     console.log(data)
-                    alert("社团已驳回");
-                    fetchActivityData(currentActivityPage);
+                    if (data.err_no == 0) {
+                        alert("活动已驳回");
+                        fetchActivityData(currentActivityPage);
+                    }else {
+                        alert("驳回活动失败："+data.err_no+" "+data.err_msg);
+                    }
+               
+                   
                 })
                 .catch(error => {
                     console.error("Error fetching data:", error);
@@ -621,8 +668,13 @@ function rejectAudit() {
                 .then(data => {
                     // 渲染获取的数据
                     console.log(data)
-                    alert("社团已驳回");
-                    fetchClubData(currentClubPage);
+                    if (data.err_no == 0) {
+                        alert("社团已驳回");
+                        fetchClubData(currentClubPage);
+                    }else {
+                        alert("驳回社团失败："+data.err_no+" "+data.err_msg);
+                    }
+                   
                 })
                 .catch(error => {
                     console.error("Error fetching data:", error);
@@ -650,8 +702,13 @@ function rejectAudit() {
                 .then(data => {
                     // 渲染获取的数据
                     console.log(data)
-                    alert("活动成果已驳回");
-                    fetchActivityResultData(currentResultPage);
+                    if (data.err_no == 0) {
+                        alert("活动成果已驳回");
+                        fetchActivityResultData(currentResultPage);
+                    }else {
+                        alert("驳回活动成果失败："+data.err_no+" "+data.err_msg);
+                    }
+                    
                 })
                 .catch(error => {
                     console.error("Error fetching data:", error);
@@ -685,6 +742,7 @@ function publishPublicNotice() {
 
     const noticeStartTime = Number(noticeStartTimeStr.substring(0,noticeStartTimeStr.length-3));
     const noticeEndTime = Number(noticeEndTimeStr.substring(0,noticeEndTimeStr.length-3));
+    console.log(noticeEndTime);
 
     if (noticeContextInput == '') {
         alert("请输入公告内容");
@@ -702,21 +760,90 @@ function publishPublicNotice() {
             "notice_id":noticeId,
             "notice_text":noticeContext,
             "notice_jump_url":noticeJumpUrl,
-            "status":noticeStatus,
+            "status":Number(noticeStatus),
             "start_time":noticeStartTime,
-            "end_time":noticeStartTime,
+            "end_time":noticeEndTime,
         })
     })
         .then(response => response.json())
         .then(data => {
             // 渲染获取的数据
             console.log(data);
-            alert("发布成功");
+            if (data.err_no == 0) {
+                alert("发布成功");
+            }else {
+                alert("发布失败："+data.err_no+" "+data.err_msg);
+            }
+      
         })
         .catch(error => {
             console.error("Error fetching data:", error);
             alert("发布出错");
         });
+}
+
+// 模拟从服务端获取公告数据
+function fetchPublicNoticeData(pageNo) {
+    currentNoticePage = pageNo
+    const noticeType = document.getElementById("noticeType").value;
+    const noticeIdInput = document.getElementById("noticeId");
+    const noticeId = noticeIdInput.value.trim();
+
+    // 检查输入是否为数字
+    if (!isNaN(noticeId)) {
+        // 在这里向服务端发送带有活动ID的请求
+        // 例如：fetch(`/api/getActivityById?id=${activityId}`)
+        // 处理服务端返回的数据并显示在页面上
+    } else {
+        alert("请输入有效的公告ID");
+    }
+    
+    // 发送GET请求到服务端以获取查询数据
+    fetch(`http://124.220.84.200:5455/public_notice/getPublicNotice?page_no=${pageNo}&page_size=${pageSize}&notice_type=${noticeType}&notice_id=${noticeId}`)
+        .then(response => response.json())
+        .then(data => {
+            // 渲染获取的数据
+            console.log(data)
+            if (data.err_no == 0) {
+                renderPublicNoticeData(data);
+            }else {
+                alert("获取数据失败："+data.err_no+" "+data.err_msg);
+            }
+           
+        })
+        .catch(error => {
+            console.error("Error fetching data:", error);
+        });
+}
+
+
+// 渲染公告数据到表格
+function renderPublicNoticeData(noticeData) {
+    const noticeTableBody = document.getElementById("noticeTableBody");
+  
+    // 清空表格内容
+    noticeTableBody.innerHTML = "";
+
+    noticeData.data.notice_datas.forEach((notice, index) => {
+        const row = document.createElement("tr");
+
+        noticeIdMap[index] = notice.notice_id
+   
+        row.innerHTML = `
+            <td>${notice.notice_id}
+            <td>${notice.notice_text}</td>
+            <td>${notice.jump_url}</td>
+            <td>${notice.status}</td>
+            <td>${notice.start_time}</td>
+            <td>${notice.end_time}</td>
+            <td>${notice.creator_uid}</td>
+            <td>${notice.creator_name}</td>
+        `;
+        noticeTableBody.appendChild(row);
+    });
+
+    totalNoticeCount = noticeData.data.notice_num
+    updatePublicNoticePageInfo();
 }
 
 // // 当用户点击提交按钮时，向服务端发送请求，并关闭模态框
