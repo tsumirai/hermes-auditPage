@@ -6,7 +6,7 @@
 
 /* 标签页容器 */
 .tabs {
-    width: 200px; /* 左侧标签页容器的宽度 */
+    width: 100px; /* 左侧标签页容器的宽度 */
     background-color: #f2f2f2;
     padding: 10px;
     text-align: center; /* 文本居中 */

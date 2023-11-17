@@ -668,6 +668,57 @@ function rejectAudit() {
     }
 }
 
+// 发布公告
+function publishPublicNotice() {
+    const noticeIdInput = document.getElementById("publishNoticeId").value;
+    const noticeContextInput = document.getElementById("publishNoticeContext").value;
+    const noticeJumpUrlInput = document.getElementById("publishNoticeJumpUrl").value;
+    const noticeStartTimeInput = document.getElementById("publishNoticeStartTime").value;
+    const noticeEndTimeInput = document.getElementById("publishNoticeEndTime").value;
+    const noticeStatus = document.getElementById("publishNoticeStatus").value;
+    
+    const noticeId = noticeIdInput.trim();
+    const noticeContext = noticeContextInput.trim();
+    const noticeJumpUrl = noticeJumpUrlInput.trim();
+    const noticeStartTimeStr = Date.parse(noticeStartTimeInput)+ '';
+    const noticeEndTimeStr = Date.parse(noticeEndTimeInput)+ '';
+
+    const noticeStartTime = Number(noticeStartTimeStr.substring(0,noticeStartTimeStr.length-3));
+    const noticeEndTime = Number(noticeEndTimeStr.substring(0,noticeEndTimeStr.length-3));
+
+    if (noticeContextInput == '') {
+        alert("请输入公告内容");
+        return 
+    }
+
+    // 发送POST请求到服务端以获取查询数据
+    fetch(`http://124.220.84.200:5455/public_notice/createPublicNotice`,{
+        method: 'post',
+        headers: {
+            'Content-Type':'application/json',
+            'Access-Control-Allow-Origin': '*'
+        },
+        body: JSON.stringify({
+            "notice_id":noticeId,
+            "notice_text":noticeContext,
+            "notice_jump_url":noticeJumpUrl,
+            "status":noticeStatus,
+            "start_time":noticeStartTime,
+            "end_time":noticeStartTime,
+        })
+    })
+        .then(response => response.json())
+        .then(data => {
+            // 渲染获取的数据
+            console.log(data);
+            alert("发布成功");
+        })
+        .catch(error => {
+            console.error("Error fetching data:", error);
+            alert("发布出错");
+        });
+}
+
 // // 当用户点击提交按钮时，向服务端发送请求，并关闭模态框
 // document.getElementById("submitRejection").addEventListener("click", function() {
     
