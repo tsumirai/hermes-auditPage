@@ -17,6 +17,8 @@
             <button class="tablinks" onclick="openTab(event, 'activityResultTab')">活动成果</button>
             <button class="tablinks" onclick="openTab(event, 'publishPublicNoticeTab')">发布公告</button>
             <button class="tablinks" onclick="openTab(event, 'publicNoticeTab')">公告</button>
+            <button class="tablinks" onclick="openTab(event, 'publishBannerTab')">发布banner</button>
+            <button class="tablinks" onclick="openTab(event, 'bannerTab')">banner</button>
         </div>
 
 
@@ -268,6 +270,101 @@
                         <button onclick="prevPuliceNoticePage()">上一页</button>
                         <span id="pagePublicNoticeInfo">Page 1 of 1</span>
                         <button onclick="nextPubliceNoticePage()">下一页</button>
+                    </div>
+                </div>
+            </div>
+
+             <!-- 发布banner标签页内容 -->
+             <div id="publishBannerTab" class="tabcontent">
+                <div class="content">
+                    <h2>发布banner</h2>
+                    <!-- 下拉菜单和表格等内容 -->
+                    <div class="search-container">
+                        <!-- banner ID输入框 -->
+                        <label for="publishBannerId">banner ID：</label>
+                        <input type="text" id="publishBannerId">
+
+                        <!-- banner图片url输入框 -->
+                        <label for="publishBannerImgUrl">图片url：</label>
+                        <input type="text" id="publishBannerImgUrl">
+
+                        <!-- banner跳转链接输入框 -->
+                        <label for="publishBannerJumpUrl">banner跳转链接：</label>
+                        <input type="text" id="publishBannerJumpUrl">
+
+                    </div>
+                    <div class="search-container">
+                        <!-- banner生效开始时间输入框 -->
+                        <label for="publishBannerStartTime">banner生效开始时间：</label>
+                        <input type="datetime-local" id="publishBannerStartTime">
+
+                         <!-- banner生效结束时间输入框 -->
+                         <label for="publishBannerEndTime">banner生效结束时间：</label>
+                         <input type="datetime-local" id="publishBannerEndTime">
+
+                        <!-- 下拉菜单 -->
+                        <label for="publishBannerStatus">banner是否生效：</label>
+                        <select id="publishBannerStatus">
+                            <option value="0">不生效</option>
+                            <option value="1">生效</option>
+                        </select>
+                    </div>
+ 
+                    <div class="search-container">
+                        <!-- 发布按钮 -->
+                        <button onclick="publishBanner()">发布</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- banner标签页内容 -->
+            <div id="bannerTab" class="tabcontent">
+                <div class="content">
+                    <h2>banner管理</h2>
+                    <!-- 下拉菜单和表格等内容 -->
+                    <div class="search-container">
+                        <!-- 下拉菜单 -->
+                        <label for="bannerType">公告类型：</label>
+                        <select id="bannerType">
+                            <option value="">全部banner</option>
+                            <option value="1">已上线banner</option>
+                            <option value="2">未上线banner</option>
+                            <option value="3">已进入生效期banner</option>
+                            <option value="4">未进入生效期banner</option>
+                        </select>
+                    
+                        <!-- banner ID输入框和查询按钮 -->
+                        <label for="bannerId">banner ID：</label>
+                        <input type="text" id="bannerId">
+
+                        <!-- 查询按钮 -->
+                        <button onclick="fetchBannerData(1)">查询</button>
+                    </div>
+
+                    <table border="1">
+                        <thead>
+                            <tr>
+                                <th>banner id</th>
+                                <th>图片url</th>
+                                <th>跳转链接</th>
+                                <th>生效开始时间</th>
+                                <th>生效结束时间</th>
+                                <th>是否生效</th>
+                                <th>发布者uid</th>
+                                <th>发布者</th>
+                                <th>操作</th>
+                            </tr>
+                        </thead>
+                        <tbody id="bannerTableBody">
+                            <!-- 公告数据将动态填充到这里 -->
+                        </tbody>
+                    </table>
+
+                    <!-- 分页按钮和信息 -->
+                    <div class="pagination">
+                        <button onclick="prevBannerPage()">上一页</button>
+                        <span id="pageBannerInfo">Page 1 of 1</span>
+                        <button onclick="nextBannerPage()">下一页</button>
                     </div>
                 </div>
             </div>

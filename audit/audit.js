@@ -6,12 +6,14 @@ let currentActivityPage = 1;
 let currentClubPage = 1;
 let currentResultPage = 1;
 let currentNoticePage = 1;
+let currentBannerPage = 1;
 
 // 总数据量（假设在服务端获取）
 let totalActivityCount = 0; // 这里需要根据实际情况设置
 let totalClubCount = 0; 
 let totalResultCount = 0;
 let totalNoticeCount = 0;
+let totalBannerCount = 0;
 
 let activityIdMap = {};
 let rejectActivityIndex = 0;
@@ -24,6 +26,9 @@ let rejectResultIndex = 0;
 
 let noticeIdMap = {};
 let rejectNoticeIndex = 0;
+
+let bannerIdMap = {};
+let rejectBannerIndex = 0;
 
 let rejectType = 0;
 
@@ -868,6 +873,152 @@ function nextPubliceNoticePage() {
         currentNoticePage++;
         //fetchAndRenderPostData();
         fetchPublicNoticeData(currentNoticePage);
+    }
+}
+
+// 发布banner
+function publishBanner() {
+    const bannerIdInput = document.getElementById("publishBannerId").value;
+    const bannerImgUrlInput = document.getElementById("publishBannerImgUrl").value;
+    const bannerJumpUrlInput = document.getElementById("publishBannerJumpUrl").value;
+    const bannerStartTimeInput = document.getElementById("publishBannerStartTime").value;
+    const bannerEndTimeInput = document.getElementById("publishBannerEndTime").value;
+    const bannerStatus = document.getElementById("publishBannerStatus").value;
+    
+    const bannerId = bannerIdInput.trim();
+    const bannerImgUrl = bannerImgUrlInput.trim();
+    const bannerJumpUrl = bannerJumpUrlInput.trim();
+    const bannerStartTimeStr = Date.parse(bannerStartTimeInput)+ '';
+    const bannerEndTimeStr = Date.parse(bannerEndTimeInput)+ '';
+
+    const bannerStartTime = Number(bannerStartTimeStr.substring(0,bannerStartTimeStr.length-3));
+    const bannerEndTime = Number(bannerEndTimeStr.substring(0,bannerEndTimeStr.length-3));
+    console.log(bannerEndTime);
+
+    if (bannerImgUrlInput == '') {
+        alert("请输入图片url");
+        return 
+    }
+
+    // 发送POST请求到服务端以获取查询数据
+    fetch(`http://124.220.84.200:5455/banner/createBanner`,{
+        method: 'post',
+        headers: {
+            'Content-Type':'application/json',
+            'Access-Control-Allow-Origin': '*'
+        },
+        body: JSON.stringify({
+            "banner_id":bannerId,
+            "banner_img_url":bannerImgUrl,
+            "banner_jump_url":bannerJumpUrl,
+            "status":Number(bannerStatus),
+            "start_time":bannerStartTime,
+            "end_time":bannerEndTime,
+        })
+    })
+        .then(response => response.json())
+        .then(data => {
+            // 渲染获取的数据
+            console.log(data);
+            if (data.err_no == 0) {
+                alert("发布成功");
+            }else {
+                alert("发布失败："+data.err_no+" "+data.err_msg);
+            }
+      
+        })
+        .catch(error => {
+            console.error("Error fetching data:", error);
+            alert("发布出错");
+        });
+}
+
+// 模拟从服务端获取公告数据
+function fetchBannerData(pageNo) {
+    currentBannerPage = pageNo
+    const bannerType = document.getElementById("bannerType").value;
+    const bannerIdInput = document.getElementById("bannerId");
+    const bannerId = bannerIdInput.value.trim();
+
+    // 检查输入是否为数字
+    if (!isNaN(bannerId)) {
+        // 在这里向服务端发送带有活动ID的请求
+        // 例如：fetch(`/api/getActivityById?id=${activityId}`)
+        // 处理服务端返回的数据并显示在页面上
+    } else {
+        alert("请输入有效的banner ID");
+    }
+    
+    // 发送GET请求到服务端以获取查询数据
+    fetch(`http://124.220.84.200:5455/platform/queryBanner?page_no=${pageNo}&page_size=${pageSize}&banner_type=${bannerType}&banner_id=${bannerId}`)
+        .then(response => response.json())
+        .then(data => {
+            // 渲染获取的数据
+            console.log(data)
+            if (data.err_no == 0) {
+                renderBannerData(data);
+            }else {
+                alert("获取数据失败："+data.err_no+" "+data.err_msg);
+            }
+           
+        })
+        .catch(error => {
+            console.error("Error fetching data:", error);
+        });
+}
+
+
+// 渲染公告数据到表格
+function renderBannerData(bannerData) {
+    const bannerTableBody = document.getElementById("bannerTableBody");
+  
+    // 清空表格内容
+    bannerTableBody.innerHTML = "";
+
+    bannerData.data.banner_datas.forEach((banner, index) => {
+        const row = document.createElement("tr");
+
+        bannerIdMap[index] = banner.banner_id
+   
+        row.innerHTML = `
+            <td>${banner.banner_id}
+            <td>${banner.banner_img_url}</td>
+            <td>${banner.banner_jump_url}</td>
+            <td>${convertTimeStampToTime(banner.start_time)}</td>
+            <td>${convertTimeStampToTime(banner.end_time)}</td>
+            <td>${banner.status}</td>
+            <td>${banner.creator_uid}</td>
+            <td>${banner.creator_name}</td>
+        `;
+        bannerTableBody.appendChild(row);
+    });
+
+    totalBannerCount = bannerData.data.banner_num
+    updateBannerPageInfo();
+}
+
+// 更新分页信息
+function updateBannerPageInfo() {
+    const totalPages = Math.ceil(totalBannerCount / pageSize);
+    document.getElementById("pageBannerInfo").innerText=`Page ${currentBannerPage} of ${totalPages}`
+}
+
+// 上一页按钮点击事件处理函数
+function prevPuliceBannerPage() {
+    if (currentBannerPage > 1) {
+        currentBannerPage--;
+        //fetchAndRenderPostData();
+        fetchBannerData(currentResultPage);
+    }
+}
+
+// 下一页按钮点击事件处理函数
+function nextPubliceBannerPage() {
+    const totalPages = Math.ceil(totalBannerCount / pageSize);
+    if (currentBannerPage < totalPages) {
+        currentBannerPage++;
+        //fetchAndRenderPostData();
+        fetchBannerData(currentBannerPage);
     }
 }
 
