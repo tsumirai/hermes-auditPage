@@ -982,7 +982,7 @@ function renderBannerData(bannerData) {
    
         row.innerHTML = `
             <td>${banner.banner_id}
-            <td>${banner.banner_img_url}</td>
+            <td>${banner.banner_img_url && banner.banner_img_url != "" ? `<img src="${banner.banner_img_url}" alt="banner图片" width="100"` : ''}</td>
             <td>${banner.banner_jump_url}</td>
             <td>${convertTimeStampToTime(banner.start_time)}</td>
             <td>${convertTimeStampToTime(banner.end_time)}</td>
