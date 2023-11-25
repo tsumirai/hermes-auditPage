@@ -49,7 +49,7 @@ function fetchActivityData(pageNo) {
     }
     
     // 发送GET请求到服务端以获取查询数据
-    fetch(`http://124.220.84.200:5455/platform/queryActivity?page_no=${pageNo}&page_size=${pageSize}&audit_type=${postType}&activity_id=${activityId}`)
+    fetch(`http://127.0.0.1:5455/platform/queryActivity?page_no=${pageNo}&page_size=${pageSize}&audit_type=${postType}&activity_id=${activityId}`)
         .then(response => response.json())
         .then(data => {
             // 渲染获取的数据
@@ -124,7 +124,7 @@ function approvePost(activityIndex) {
     let activityId = activityIdMap[activityIndex]
 
     // 发送POST请求到服务端以获取查询数据
-    fetch(`http://124.220.84.200:5455/platform/auditData`,{
+    fetch(`http://127.0.0.1:5455/platform/auditData`,{
         method: 'post',
         headers: {
             'Content-Type':'application/json',
@@ -170,7 +170,7 @@ function approveClub(clubIndex) {
     let clubId = clubIdMap[clubIndex]
 
     // 发送POST请求到服务端以获取查询数据
-    fetch(`http://124.220.84.200:5455/platform/auditData`,{
+    fetch(`http://127.0.0.1:5455/platform/auditData`,{
         method: 'post',
         headers: {
             'Content-Type':'application/json',
@@ -231,7 +231,7 @@ function fetchClubData(pageNo) {
     }
 
     // 发送GET请求到服务端以获取查询数据
-    fetch(`http://124.220.84.200:5455/platform/queryClub?page_no=${pageNo}&page_size=${pageSize}&audit_type=${clubType}&club_id=${clubId}`)
+    fetch(`http://127.0.0.1:5455/platform/queryClub?page_no=${pageNo}&page_size=${pageSize}&audit_type=${clubType}&club_id=${clubId}`)
         .then(response => response.json())
         .then(data => {
             // 渲染获取的数据
@@ -303,7 +303,7 @@ function fetchActivityResultData(pageNo) {
     }
     
     // 发送GET请求到服务端以获取查询数据
-    fetch(`http://124.220.84.200:5455/platform/queryActivityResult?page_no=${pageNo}&page_size=${pageSize}&audit_type=${postType}&activity_id=${resultId}`)
+    fetch(`http://127.0.0.1:5455/platform/queryActivityResult?page_no=${pageNo}&page_size=${pageSize}&audit_type=${postType}&activity_id=${resultId}`)
         .then(response => response.json())
         .then(data => {
             // 渲染获取的数据
@@ -361,7 +361,7 @@ function approveActivityResult(resultIndex) {
     let resultId = resultIdMap[resultIndex]
 
     // 发送POST请求到服务端以获取查询数据
-    fetch(`http://124.220.84.200:5455/platform/auditData`,{
+    fetch(`http://127.0.0.1:5455/platform/auditData`,{
         method: 'post',
         headers: {
             'Content-Type':'application/json',
@@ -422,7 +422,7 @@ function approvePost(activityIndex) {
     let activityId = activityIdMap[activityIndex]
 
     // 发送POST请求到服务端以获取查询数据
-    fetch(`http://124.220.84.200:5455/platform/auditData`,{
+    fetch(`http://127.0.0.1:5455/platform/auditData`,{
         method: 'post',
         headers: {
             'Content-Type':'application/json',
@@ -621,7 +621,7 @@ function rejectAudit() {
         if (rejectType == 0) {
             let activityId = activityIdMap[rejectActivityIndex]
             // 发送POST请求到服务端以获取查询数据
-            fetch(`http://124.220.84.200:5455/platform/auditData`,{
+            fetch(`http://127.0.0.1:5455/platform/auditData`,{
                 method: 'post',
                 headers: {
                     'Content-Type':'application/json',
@@ -656,7 +656,7 @@ function rejectAudit() {
         } else if (rejectType == 1) {
             let clubId = clubIdMap[rejectClubIndex]
             // 发送POST请求到服务端以获取查询数据
-            fetch(`http://124.220.84.200:5455/platform/auditData`,{
+            fetch(`http://127.0.0.1:5455/platform/auditData`,{
                 method: 'post',
                 headers: {
                     'Content-Type':'application/json',
@@ -690,7 +690,7 @@ function rejectAudit() {
         } else if (rejectType == 2) {
             let resultId = resultIdMap[rejectResultIndex]
             // 发送POST请求到服务端以获取查询数据
-            fetch(`http://124.220.84.200:5455/platform/auditData`,{
+            fetch(`http://127.0.0.1:5455/platform/auditData`,{
                 method: 'post',
                 headers: {
                     'Content-Type':'application/json',
@@ -755,7 +755,7 @@ function publishPublicNotice() {
     }
 
     // 发送POST请求到服务端以获取查询数据
-    fetch(`http://124.220.84.200:5455/public_notice/createPublicNotice`,{
+    fetch(`http://127.0.0.1:5455/public_notice/createPublicNotice`,{
         method: 'post',
         headers: {
             'Content-Type':'application/json',
@@ -804,7 +804,7 @@ function fetchPublicNoticeData(pageNo) {
     }
     
     // 发送GET请求到服务端以获取查询数据
-    fetch(`http://124.220.84.200:5455/platform/queryPublicNotice?page_no=${pageNo}&page_size=${pageSize}&notice_type=${noticeType}&notice_id=${noticeId}`)
+    fetch(`http://127.0.0.1:5455/platform/queryPublicNotice?page_no=${pageNo}&page_size=${pageSize}&notice_type=${noticeType}&notice_id=${noticeId}`)
         .then(response => response.json())
         .then(data => {
             // 渲染获取的数据
@@ -901,7 +901,7 @@ function publishBanner() {
     }
 
     // 发送POST请求到服务端以获取查询数据
-    fetch(`http://124.220.84.200:5455/banner/createBanner`,{
+    fetch(`http://127.0.0.1:5455/banner/createBanner`,{
         method: 'post',
         headers: {
             'Content-Type':'application/json',
@@ -950,7 +950,7 @@ function fetchBannerData(pageNo) {
     }
     
     // 发送GET请求到服务端以获取查询数据
-    fetch(`http://124.220.84.200:5455/platform/queryBanner?page_no=${pageNo}&page_size=${pageSize}&banner_type=${bannerType}&banner_id=${bannerId}`)
+    fetch(`http://127.0.0.1:5455/platform/queryBanner?page_no=${pageNo}&page_size=${pageSize}&banner_type=${bannerType}&banner_id=${bannerId}`)
         .then(response => response.json())
         .then(data => {
             // 渲染获取的数据
