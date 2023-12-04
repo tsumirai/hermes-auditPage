@@ -491,7 +491,7 @@ function prevActivityPage() {
 
 // 下一页按钮点击事件处理函数
 function nextActivityPage() {
-    const totalPages = Math.ceil(totalActivityCount / pageSize);
+    let totalPages = Math.ceil(totalActivityCount / pageSize);
     if (currentActivityPage < totalPages) {
         currentActivityPage++;
         //fetchAndRenderPostData();
@@ -510,7 +510,7 @@ function prevClubPage() {
 
 // 下一页按钮点击事件处理函数
 function nextClubPage() {
-    const totalPages = Math.ceil(totalClubCount / pageSize);
+    let totalPages = Math.ceil(totalClubCount / pageSize);
     if (currentClubPage < totalPages) {
         currentClubPage++;
         //fetchAndRenderPostData();
@@ -529,7 +529,7 @@ function prevActivityResultPage() {
 
 // 下一页按钮点击事件处理函数
 function nextActivityResultPage() {
-    const totalPages = Math.ceil(totalResultCount / pageSize);
+    let totalPages = Math.ceil(totalResultCount / pageSize);
     if (currentResultPage < totalPages) {
         currentResultPage++;
         //fetchAndRenderPostData();
@@ -540,7 +540,7 @@ function nextActivityResultPage() {
 
 // 更新分页信息
 function updateActivityPageInfo() {
-    const totalPages = Math.ceil(totalActivityCount / pageSize);
+    let totalPages = Math.ceil(totalActivityCount / pageSize);
 
     if (!totalActivityCount || totalActivityCount == 0) {
         totalPages = 0;
@@ -551,7 +551,7 @@ function updateActivityPageInfo() {
 
 // 更新分页信息
 function updateClubPageInfo() {
-    const totalPages = Math.ceil(totalClubCount / pageSize);
+    let totalPages = Math.ceil(totalClubCount / pageSize);
 
     if (!totalClubCount || totalClubCount == 0) {
         totalPages = 0;
@@ -563,7 +563,7 @@ function updateClubPageInfo() {
 
 // 更新分页信息
 function updateActivityResultPageInfo() {
-    const totalPages = Math.ceil(totalResultCount / pageSize);
+    let totalPages = Math.ceil(totalResultCount / pageSize);
 
     if (!totalResultCount || totalResultCount == 0) {
         totalPages = 0;
@@ -882,7 +882,7 @@ function renderPublicNoticeData(noticeData) {
 
 // 更新分页信息
 function updatePublicNoticePageInfo() {
-    const totalPages = Math.ceil(totalNoticeCount / pageSize);
+    let totalPages = Math.ceil(totalNoticeCount / pageSize);
     if (!totalNoticeCount || totalNoticeCount == 0) {
         totalPages = 0;
     }
@@ -900,7 +900,7 @@ function prevPuliceNoticePage() {
 
 // 下一页按钮点击事件处理函数
 function nextPubliceNoticePage() {
-    const totalPages = Math.ceil(totalNoticeCount / pageSize);
+    let totalPages = Math.ceil(totalNoticeCount / pageSize);
     if (currentNoticePage < totalPages) {
         currentNoticePage++;
         //fetchAndRenderPostData();
@@ -1031,7 +1031,7 @@ function renderBannerData(bannerData) {
 
 // 更新分页信息
 function updateBannerPageInfo() {
-    const totalPages = Math.ceil(totalBannerCount / pageSize);
+    let totalPages = Math.ceil(totalBannerCount / pageSize);
     if (!totalBannerCount || totalBannerCount == 0) {
         totalPages = 0;
     }
@@ -1050,7 +1050,7 @@ function prevPuliceBannerPage() {
 
 // 下一页按钮点击事件处理函数
 function nextPubliceBannerPage() {
-    const totalPages = Math.ceil(totalBannerCount / pageSize);
+    let totalPages = Math.ceil(totalBannerCount / pageSize);
     if (currentBannerPage < totalPages) {
         currentBannerPage++;
         //fetchAndRenderPostData();
