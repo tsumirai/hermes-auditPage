@@ -81,6 +81,10 @@ function renderPostData(activityData) {
         const row = document.createElement("tr");
 
         activityIdMap[index] = post.activity_id
+
+        let statusText = getStatusText(post.status);
+        let auditStatusText = getAuditStatusText(post.audit_status);
+        
    
         row.innerHTML = `
             <td>${post.activity_id}
@@ -90,8 +94,8 @@ function renderPostData(activityData) {
             <td>${generateImageTags(post.image_urls)}</td>
             <td>${post.author_uid}</td>
             <td>${post.activity_location}</td>
-            <td>${post.status}</td>
-            <td>${post.audit_status}</td>
+            <td>${post.status + statusText}</td>
+            <td>${post.audit_status+ auditStatusText}</td>
             <td>${post.audit_reason}</td>
             <td>
                 <button onclick="approvePost(${index})">通过审核</button>
@@ -263,6 +267,9 @@ function renderCommunityData(clubData) {
         const row = document.createElement("tr");
 
         clubIdMap[index] = club.club_id
+
+        let statusText = getStatusText(post.status);
+        let auditStatusText = getAuditStatusText(post.audit_status);
    
         row.innerHTML = `
             <td>${club.club_id}
@@ -272,8 +279,8 @@ function renderCommunityData(clubData) {
             <td>${club.club_summary}</td> 
             <td>${club.creator_uid}</td>
             <td>${club.location_desc}</td>
-            <td>${club.club_status}</td>
-            <td>${club.audit_status}</td>
+            <td>${club.club_status + statusText}</td>
+            <td>${club.audit_status + auditStatusText}</td>
             <td>${club.audit_reason}</td>
             <td>
                 <button onclick="approveClub(${index})">通过审核</button>
@@ -335,6 +342,9 @@ function renderActivityResultData(resultData) {
         const row = document.createElement("tr");
 
         resultIdMap[index] = post.result_id
+
+        let statusText = getStatusText(post.status);
+        let auditStatusText = getAuditStatusText(post.audit_status);
    
         row.innerHTML = `
             <td>${post.result_id}
@@ -342,8 +352,8 @@ function renderActivityResultData(resultData) {
             <td>${post.context}</td>
             <td>${generateImageTags(post.img_urls)}</td>
             <td>${post.author_uid}</td>
-            <td>${post.status}</td>
-            <td>${post.audit_status}</td>
+            <td>${post.status + statusText}</td>
+            <td>${post.audit_status + auditStatusText}</td>
             <td>${post.audit_reason}</td>
             <td>
                 <button onclick="approveActivityResult(${index})">通过审核</button>
@@ -1041,6 +1051,44 @@ function convertTimeStampToTime(timeStamp) {
 
     let GMT = year+'-'+month+'-'+ day+' '+hour+':'+minute+':'+second;
     return GMT
+}
+
+function getStatusText(status) {
+    let statusText = '审核中';
+    if (status == 0) {
+        statusText = '已下线'
+    } else if (status == 1) {
+        statusText = '已上线'
+    } else if (status == 2) {
+        statusText = '审核中'
+    }
+
+    return statusText
+}
+
+function getAuditStatusText(status) {
+    let statusText = '未审核';
+    if (status == 0) {
+        statusText = '未审核'
+    } else if (status == 1) {
+        statusText = '机审通过'
+    } else if (status == 2) {
+        statusText = '安全部人审通过'
+    } else if (status == 3) {
+        statusText = '后台人审通过'
+    } else if (status == -1) {
+        statusText = '机审驳回'
+    } else if (status == -2) {
+        statusText = '安全部人审驳回'
+    } else if (status == -3) {
+        statusText = '后台人审驳回'
+    } else if (status == -4) {
+        statusText = '后台删除'
+    } else if (status == -5) {
+        statusText = '用户删除'
+    }
+
+    return statusText
 }
 
 // // 当用户点击提交按钮时，向服务端发送请求，并关闭模态框
