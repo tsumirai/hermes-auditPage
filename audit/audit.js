@@ -541,18 +541,34 @@ function nextActivityResultPage() {
 // 更新分页信息
 function updateActivityPageInfo() {
     const totalPages = Math.ceil(totalActivityCount / pageSize);
+
+    if (!totalActivityCount || totalActivityCount == 0) {
+        totalPages = 0;
+    }
+
     document.getElementById("pageActivityInfo").innerText=`Page ${currentActivityPage} of ${totalPages}`
 }
 
 // 更新分页信息
 function updateClubPageInfo() {
     const totalPages = Math.ceil(totalClubCount / pageSize);
+
+    if (!totalClubCount || totalClubCount == 0) {
+        totalPages = 0;
+    }
+
+
     document.getElementById("pageClubInfo").innerText=`Page ${currentClubPage} of ${totalPages}`
 }
 
 // 更新分页信息
 function updateActivityResultPageInfo() {
     const totalPages = Math.ceil(totalResultCount / pageSize);
+
+    if (!totalResultCount || totalResultCount == 0) {
+        totalPages = 0;
+    }
+
     document.getElementById("pageActivityResultInfo").innerText=`Page ${currentResultPage} of ${totalPages}`
 }
 
@@ -867,6 +883,9 @@ function renderPublicNoticeData(noticeData) {
 // 更新分页信息
 function updatePublicNoticePageInfo() {
     const totalPages = Math.ceil(totalNoticeCount / pageSize);
+    if (!totalNoticeCount || totalNoticeCount == 0) {
+        totalPages = 0;
+    }
     document.getElementById("pagePublicNoticeInfo").innerText=`Page ${currentNoticePage} of ${totalPages}`
 }
 
@@ -1013,6 +1032,10 @@ function renderBannerData(bannerData) {
 // 更新分页信息
 function updateBannerPageInfo() {
     const totalPages = Math.ceil(totalBannerCount / pageSize);
+    if (!totalBannerCount || totalBannerCount == 0) {
+        totalPages = 0;
+    }
+  
     document.getElementById("pageBannerInfo").innerText=`Page ${currentBannerPage} of ${totalPages}`
 }
 
