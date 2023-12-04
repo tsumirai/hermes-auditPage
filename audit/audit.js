@@ -268,8 +268,8 @@ function renderCommunityData(clubData) {
 
         clubIdMap[index] = club.club_id
 
-        let statusText = getStatusText(post.status);
-        let auditStatusText = getAuditStatusText(post.audit_status);
+        let statusText = getStatusText(club.status);
+        let auditStatusText = getAuditStatusText(club.audit_status);
    
         row.innerHTML = `
             <td>${club.club_id}
