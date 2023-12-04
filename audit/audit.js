@@ -94,8 +94,8 @@ function renderPostData(activityData) {
             <td>${generateImageTags(post.image_urls)}</td>
             <td>${post.author_uid}</td>
             <td>${post.activity_location}</td>
-            <td>${post.status + statusText}</td>
-            <td>${post.audit_status+ auditStatusText}</td>
+            <td>${statusText + '（' + post.status+ ')'}</td>
+            <td>${auditStatusText + '（'+ post.audit_status+ ')'}</td>
             <td>${post.audit_reason}</td>
             <td>
                 <button onclick="approvePost(${index})">通过审核</button>
@@ -279,8 +279,8 @@ function renderCommunityData(clubData) {
             <td>${club.club_summary}</td> 
             <td>${club.creator_uid}</td>
             <td>${club.location_desc}</td>
-            <td>${club.club_status + statusText}</td>
-            <td>${club.audit_status + auditStatusText}</td>
+            <td>${statusText+'（'+club.club_status + '）'}</td>
+            <td>${auditStatusText+ '（' + club.audit_status + '）'}</td>
             <td>${club.audit_reason}</td>
             <td>
                 <button onclick="approveClub(${index})">通过审核</button>
@@ -352,8 +352,8 @@ function renderActivityResultData(resultData) {
             <td>${post.context}</td>
             <td>${generateImageTags(post.img_urls)}</td>
             <td>${post.author_uid}</td>
-            <td>${post.status + statusText}</td>
-            <td>${post.audit_status + auditStatusText}</td>
+            <td>${statusText+ '（' +post.status + '）'}</td>
+            <td>${auditStatusText+ '（' +post.audit_status + '）'}</td>
             <td>${post.audit_reason}</td>
             <td>
                 <button onclick="approveActivityResult(${index})">通过审核</button>
